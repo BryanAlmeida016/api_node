@@ -21,3 +21,9 @@ app.get('/cadastro',(req,res)=>{
 
 //configurar porta do servidor
 app.listen(3000,()=>{console.log('Servidor Rodando!')})
+
+//npm i express -y
+//npm i -g nodemon
+//nodemon server.js --> roda o servidor
+//npm install prisma --save-dev --> dependencia/biblioteca
+//npx prisma init

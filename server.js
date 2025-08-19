@@ -1,20 +1,27 @@
 import express from 'express'
 
-const app = express()
+import pkg from '@prisma/client';
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
 
+const app = express()
 app.use(express.json())
 
-const usuarios = []
-
 //criar as rotas
-app.post('/cadastro',(req,res)=>{
-    //console.log(req.body)
-    usuarios.push(req.body)
-    //res.send('Tudo certo no post :P')
+app.post('/cadastro', async (req,res)=>{
+    await prisma.usuario.create({
+        data:{
+            email: req.body.email,
+            nome: req.body.nome,
+            idade: req.body.idade
+        }
+    })
+
     res.status(201).json(req.body)
 })
 
-app.get('/cadastro',(req,res)=>{
+app.get('/cadastro', async(req,res)=>{
+    const usuarios = await prisma.usuario.findMany();
     //res.send('Funfou no get :)')
     res.status(200).json(usuarios)
 })
@@ -24,6 +31,11 @@ app.listen(3000,()=>{console.log('Servidor Rodando!')})
 
 //npm i express -y
 //npm i -g nodemon
+
 //nodemon server.js --> roda o servidor
+//node --watch server.js --> roda o servidor também*
+
 //npm install prisma --save-dev --> dependencia/biblioteca
 //npx prisma init
+//npx prisma studio --> abre o prisma studio :)
+//npx prisma generate

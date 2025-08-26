@@ -8,6 +8,34 @@ const app = express()
 app.use(express.json())
 
 //criar as rotas
+
+app.put('/cadastro/:id', async (req,res)=>{
+    //console.log(req.params.id)
+    await prisma.usuario.update({
+        where:{
+            id: req.params.id
+        },
+        data:{
+            email: req.body.email,
+            nome: req.body.nome,
+            idade: req.body.idade
+        }
+    })
+
+    res.status(201).json({"message":"Usuario Atualizado :)"})
+})
+
+app.delete('/cadastro/:id', async (req,res)=>{
+    //console.log(req.params.id)
+    await prisma.usuario.delete({
+        where:{
+            id: req.params.id
+        },
+    })
+
+    res.status(201).json({"message":"Usuario Deletado :("})
+})
+
 app.post('/cadastro', async (req,res)=>{
     await prisma.usuario.create({
         data:{
@@ -37,5 +65,6 @@ app.listen(3000,()=>{console.log('Servidor Rodando!')})
 
 //npm install prisma --save-dev --> dependencia/biblioteca
 //npx prisma init
+//npx prisma db push
 //npx prisma studio --> abre o prisma studio :)
 //npx prisma generate

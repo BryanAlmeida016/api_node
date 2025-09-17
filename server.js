@@ -34,7 +34,7 @@ app.delete('/cadastro/:id', async (req,res)=>{
             id: req.params.id
         },
     })
-
+                   
     res.status(201).json({"message":"Usuario Deletado :("})
 })
 
